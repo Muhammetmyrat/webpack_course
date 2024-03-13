@@ -2,13 +2,13 @@ import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import webpack from 'webpack'
 import 'webpack-dev-server'
+import type { Configuration as DevServerConfiguration } from 'webpack-dev-server'
 
 type Mode = 'development' | 'production'
 
 interface Environment {
   mode: Mode
 }
-
 export default (env: Environment) => {
   const config: webpack.Configuration = {
     mode: env.mode ?? 'development',
@@ -31,6 +31,10 @@ export default (env: Environment) => {
       clean: true,
     },
     plugins: [new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html') })],
+    devServer: {
+      port: 5000,
+      open: true,
+    },
   }
 
   return config
