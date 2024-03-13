@@ -1,8 +1,16 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import webpack from 'webpack'
+import 'webpack-dev-server'
 
-module.exports = (env) => {
-  return {
+type Mode = 'development' | 'production'
+
+interface Environment {
+  mode: Mode
+}
+
+export default (env: Environment) => {
+  const config: webpack.Configuration = {
     mode: env.mode ?? 'development',
     entry: path.resolve(__dirname, 'src', 'index.ts'),
     module: {
@@ -24,4 +32,6 @@ module.exports = (env) => {
     },
     plugins: [new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'public', 'index.html') })],
   }
+
+  return config
 }
